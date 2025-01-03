@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
@@ -20,16 +21,20 @@ public class GameManager : MonoBehaviour
     {
         // Debug.Log(Time.time + " : " + _lastLotateTime + " : " + _lotateCycle);
         if (Time.time > _lastLotateTime + _lotateCycle){
+            Boolean isSupachaPostable = true;
             // コメントをスクロールさせる
             for(int i = 0; i < _commentCtrlList.Count; i++){
                 CommentControl ctrl = _commentCtrlList[i];
                 // 一番下のコメント以外の場合、次のコメントに書き換える
                 if (i < _commentCtrlList.Count-1){
                     ctrl.RotateComment(_commentCtrlList[i+1]);
+                    if (!ctrl.GetCommnetCategory().Equals(CommnetCategory.NORMAL) && !ctrl.isSaidThank()){
+                        isSupachaPostable = false;
+                    }
 
                 }else{
                     //　一番下のコメントの場合、新しいコメントに書き換える
-                    ctrl.SetComment(_commentList, _userList);
+                    ctrl.SetComment(_commentList, _userList, isSupachaPostable);
                 }
             }
             _lastLotateTime = Time.time;

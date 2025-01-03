@@ -12,13 +12,13 @@ public class UserButtonAction : MonoBehaviour
 {
 
     [SerializeField]public TextMeshProUGUI _gTmp;
-    [SerializeField]private UserInfo _userInfo;
-    [SerializeField]private AudioSource _source;
+    private UserInfo _userInfo;
+    private AudioSource _source;
 
     // Start is called before the first frame update
     void Start()
     {
-        this._source = GetComponent<AudioSource>();
+        _source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -32,23 +32,23 @@ public class UserButtonAction : MonoBehaviour
     {
         var userName = this._gTmp.text;
         Debug.Log(userName + "　が押されました。");
-        this.PlayVoice();
+        PlayVoice();
     }
 
     public void SetUserInfo(UserInfo userInfo)
     {
-        this._userInfo = userInfo;
-        this.setUserName(userInfo.userName);
+        _userInfo = userInfo;
+        setUserName(userInfo.userName);
     }
 
     public void PlayVoice(){
-        Debug.Log(this._userInfo.audio.name);
-        this._source.clip = this._userInfo.audio;
-        this._source.Play();
+        Debug.Log(_userInfo.audio.name);
+        _source.clip = _userInfo.audio;
+        _source.Play();
     }
 
     public void setUserName(String userName)
     {
-        this._gTmp.SetText(userName);
+        _gTmp.SetText(userName);
     }
 }
