@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6147dc1ba48b0434bb5ead95ba12c392, type: 3}
   m_Name: SUPER_CHAT
   m_EditorClassIdentifier: 
-  category: 1
+  Category: 1
+  Caption: "\u30B9\u30D1\u30C1\u30E3"
   CommentBoxColroCode: 09DFEF
   CommentBoxColor: {r: 0.03529412, g: 0.8745098, b: 0.9372549, a: 1}
   CommentColorCode: DAFCF7

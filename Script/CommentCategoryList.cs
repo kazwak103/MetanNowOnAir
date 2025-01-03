@@ -10,7 +10,7 @@ public class CommentCategoryList : ScriptableObject
 
     public CommnetCategoryValue GetCommnetCategoryValue(CommnetCategory category){
         foreach (CommnetCategoryValue commnetCategoryValue in commnetCategories){
-            if (commnetCategoryValue.category.Equals(category)){
+            if (commnetCategoryValue.Category.Equals(category)){
                 return commnetCategoryValue;
             }
         }

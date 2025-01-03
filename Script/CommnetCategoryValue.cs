@@ -7,7 +7,8 @@ using UnityEngine;
 [SerializeField]
 public class CommnetCategoryValue : ScriptableObject
 {
-    public CommnetCategory category;
+    public CommnetCategory Category;
+    public String Caption;
     public String CommentBoxColroCode;
     public Color CommentBoxColor;
     public String CommentColorCode;

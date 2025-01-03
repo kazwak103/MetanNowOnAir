@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6147dc1ba48b0434bb5ead95ba12c392, type: 3}
   m_Name: MEMBERSHIP_GIFT
   m_EditorClassIdentifier: 
-  category: 4
+  Category: 4
+  Caption: "\u30E1\u30F3\u30AE\u30D5"
   CommentBoxColroCode: 066B11
   CommentBoxColor: {r: 0.023529412, g: 0.41960785, b: 0.06666667, a: 1}
   CommentColorCode: FFFFFF

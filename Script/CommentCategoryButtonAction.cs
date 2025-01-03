@@ -7,14 +7,14 @@ using UnityEngine;
 public class CommentCategoryButton : MonoBehaviour
 {
     [SerializeField]private CommnetCategoryValue _category;
-    [SerializeField]private GameObject _gObj;
-    [SerializeField]private TextMeshProUGUI _tmp;
+    [SerializeField]private GameObject _commentBoard;
+    [SerializeField]private TextMeshProUGUI _buttonCaption;
     // Start is called before the first frame update
     void Start()
     {
-        _gObj.GetComponent<Renderer>().material.color = _category.CommentBoxColor;
-        _tmp.color = _category.CommentColor;
-        
+        _commentBoard.GetComponent<Renderer>().material.color = _category.CommentBoxColor;
+        _buttonCaption.color = _category.OprionMessageColor;
+        _buttonCaption.text = _category.Caption;
     }
 
     // Update is called once per frame

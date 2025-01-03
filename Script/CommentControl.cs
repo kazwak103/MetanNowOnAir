@@ -90,10 +90,11 @@ public class CommentControl : MonoBehaviour
                 break;
             }
         }
+        Debug.Log("コメントの種類 : " + commnetCategoryValue.Caption);
 
         // 選択されたチケットの種類にあわせて設定する
         _commentBox.GetComponent<Renderer>().material.color = commnetCategoryValue.CommentBoxColor;
-        _commentCategory = commnetCategoryValue.category;
+        _commentCategory = commnetCategoryValue.Category;
         _tmpComment.color = commnetCategoryValue.CommentColor;
         _tmpUser.color = commnetCategoryValue.UserNameColor;
         _tmpOptionMsg.text = commnetCategoryValue.OptionMessage;

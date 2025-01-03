@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6147dc1ba48b0434bb5ead95ba12c392, type: 3}
   m_Name: MEMBERSHIP
   m_EditorClassIdentifier: 
-  category: 3
+  Category: 3
+  Caption: "\u30E1\u30F3\u30D0\u30FC\u767B\u9332"
   CommentBoxColroCode: 13A506
   CommentBoxColor: {r: 0.07450981, g: 0.64705884, b: 0.023529412, a: 1}
   CommentColorCode: FFFFFF
