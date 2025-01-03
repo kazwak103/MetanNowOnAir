@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6147dc1ba48b0434bb5ead95ba12c392, type: 3}
+  m_Name: SUPER_CHAT
+  m_EditorClassIdentifier: 
+  category: 1
+  CommentBoxColroCode: 09DFEF
+  CommentBoxColor: {r: 0.03529412, g: 0.8745098, b: 0.9372549, a: 1}
+  CommentColorCode: DAFCF7
+  CommentColor: {r: 0.85490197, g: 0.9882353, b: 0.96862745, a: 1}
+  UserNameColorCode: 081699
+  UserNameColor: {r: 0.030565985, g: 0.085173644, b: 0.5999999, a: 1}
+  OptionMessage: "\uFFE5\uFF11\uFF0C\uFF10\uFF10\uFF10"
+  OprionMessageColorCode: DAFCF7
+  OprionMessageColor: {r: 0.85490197, g: 0.9882353, b: 0.96862745, a: 1}
