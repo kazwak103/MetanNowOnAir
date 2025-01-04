@@ -23,13 +23,12 @@ public class CommentControl : MonoBehaviour
     {
         // ユーザー名、IDを設定
         var userInfo = _userList.userList[UnityEngine.Random.Range(0, _userList.userList.Count)];
-        _tmpUser.text = userInfo.userName;
+        _tmpUser.text = userInfo.UserName;
         _userId = userInfo.id;
         
         // コメントを設定
         _tmpComment.text = _commnetList.list[UnityEngine.Random.Range(0, _commnetList.list.Count)].CommentWord;
         _commentCategory = CommnetCategory.NORMAL;
-
     }
 
     // Update is called once per frame
@@ -58,17 +57,17 @@ public class CommentControl : MonoBehaviour
 
     // 新規のコメントを作成する。
     // 主に最新のコメントを作成するのに使用する    
-     public void SetComment(CommnetList commnetList, UserList userList, Boolean isSupachaPostable){
+     public UserInfo SetComment(CommnetList commnetList, UserList userList, Boolean isSupachaPostable){
 
         // コメント、ユーザーを設定する
         _tmpComment.text = commnetList.list[UnityEngine.Random.Range(0, commnetList.list.Count)].CommentWord;
         UserInfo userInfo = userList.userList[UnityEngine.Random.Range(0, userList.userList.Count)];
         _userId = userInfo.id;
-        _tmpUser.text = userInfo.userName;
+        _tmpUser.text = userInfo.UserName;
 
         CommnetCategoryValue commnetCategoryValue = _commentCategoryList.GetCommnetCategoryValue(CommnetCategory.NORMAL);
         if (isSupachaPostable) {
-            switch (UnityEngine.Random.Range(0,5))
+            switch (UnityEngine.Random.Range(0,4))
             {
                 case 0:
                 // スーパーチャット
@@ -99,6 +98,13 @@ public class CommentControl : MonoBehaviour
         _tmpUser.color = commnetCategoryValue.UserNameColor;
         _tmpOptionMsg.text = commnetCategoryValue.OptionMessage;
         _tmpOptionMsg.color = commnetCategoryValue.OprionMessageColor;
+
+        //デフォルトメッセージが設定されている場合は書き換える
+        if (!String.IsNullOrEmpty(commnetCategoryValue.DefaultMessage)){
+            _tmpComment.text = commnetCategoryValue.DefaultMessage;
+        }
+
+        return userInfo;
     }
 
     public CommnetCategory GetCommnetCategory(){
@@ -111,5 +117,13 @@ public class CommentControl : MonoBehaviour
 
     public Boolean isSaidThank(){
         return _isSaidThank;
+    }
+
+    public int getPoint(int userId){
+        int point = 0;
+        if (userId == _userId && _isSaidThank){
+            return 100;
+        }
+        return point;
     }
 }

@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 public class KeyController : MonoBehaviour
 {
@@ -12,43 +15,30 @@ public class KeyController : MonoBehaviour
     [SerializeField]public UserButtonAction _BButton;
     [SerializeField]private UserList _uList;
 
-    private bool isClicked = false;
+    //private bool isClicked = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        this.SetUserButtonCaption();
+        // SetUserButtonCaption(-1);
+        _TButton._gTmp.text = "";
+        _LButton._gTmp.text = "";
+        _RButton._gTmp.text = "";
+        _BButton._gTmp.text = "";
     }
 
     // Update is called once per frame
     void Update()
     {
+        int userId = -1;
         if (Input.GetKeyDown(KeyCode.A)){
-            this._LButton.click();
-            this.isClicked = true;
+            userId  = _LButton.click();
         }else if (Input.GetKeyDown(KeyCode.D)){
-            this._RButton.click();
-            this.isClicked = true;
+            userId = _RButton.click();
         }else if (Input.GetKeyDown(KeyCode.W)){
-            this._TButton.click();
-            this.isClicked = true;
+            userId = _TButton.click();
         }else if (Input.GetKeyDown(KeyCode.S)){
-            this._BButton.click();
-            this.isClicked = true;
-        }
-        // クリックされた場合はユーザーボタンのキャプションを更新
-        if (this.isClicked){
-            this.SetUserButtonCaption();
+            userId = _BButton.click();
         }
     }
-
-    private void SetUserButtonCaption(){
-        UserButtonAction[] ubList = {this._TButton, this._LButton, this._RButton, this._BButton};
-        foreach(UserButtonAction act in ubList){
-            act.SetUserInfo(this._uList.userList[Random.Range(0,_uList.userList.Count)]);
-        }
-        this.isClicked = false;
-    }
-    
-
 }

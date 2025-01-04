@@ -28,22 +28,35 @@ public class UserButtonAction : MonoBehaviour
     }
 
     // ボタンクリック
-    public void click()
+    // クリックされたボタンに設定されているユーザーIDを返す
+    public int click()
     {
-        var userName = this._gTmp.text;
+        if (!GameManager._currentPeriod.Equals(GameManager.Period.USER)){
+            return -1;
+        }
+        var userName = _gTmp.text;
         Debug.Log(userName + "　が押されました。");
+        Debug.Log("ターゲットユーザー　：　"+ GameManager._targetUser.UserName);
         PlayVoice();
+        if (_userInfo.id == GameManager._targetUser.id){
+            GameManager.AddScore();
+        }
+        else {
+            GameManager.LostScore();
+        }
+        GameManager._currentPeriod = GameManager.Period.COMMENT;
+        return _userInfo.id;
     }
 
     public void SetUserInfo(UserInfo userInfo)
     {
         _userInfo = userInfo;
-        setUserName(userInfo.userName);
+        setUserName(userInfo.UserName);
     }
 
     public void PlayVoice(){
-        Debug.Log(_userInfo.audio.name);
-        _source.clip = _userInfo.audio;
+        Debug.Log(_userInfo.Voice.name);
+        _source.clip = _userInfo.Voice;
         _source.Play();
     }
 

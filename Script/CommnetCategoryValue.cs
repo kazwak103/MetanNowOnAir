@@ -18,4 +18,6 @@ public class CommnetCategoryValue : ScriptableObject
     public String OptionMessage;
     public String OprionMessageColorCode;
     public Color OprionMessageColor;
+    public String DefaultMessage;
+    public AudioClip Voice;
 }

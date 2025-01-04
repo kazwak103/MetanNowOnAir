@@ -21,5 +21,5 @@ MonoBehaviour:
   UserNameColorCode: 081699
   UserNameColor: {r: 0.030565985, g: 0.085173644, b: 0.5999999, a: 1}
   OptionMessage: "\uFFE5\uFF11\uFF0C\uFF10\uFF10\uFF10"
-  OprionMessageColorCode: DAFCF7
-  OprionMessageColor: {r: 0.85490197, g: 0.9882353, b: 0.96862745, a: 1}
+  OprionMessageColorCode: 081699
+  OprionMessageColor: {r: 0.03137255, g: 0.08627451, b: 0.6, a: 1}

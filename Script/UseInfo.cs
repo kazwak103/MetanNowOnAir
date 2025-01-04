@@ -9,6 +9,6 @@ using UnityEngine;
 public class UserInfo : ScriptableObject
 {
     public int id;                  // ID
-    public String userName;         // ユーザー名
-    public AudioClip audio;         // 音声ファイル
+    public String UserName;         // ユーザー名
+    public AudioClip Voice;         // 音声ファイル
 }
