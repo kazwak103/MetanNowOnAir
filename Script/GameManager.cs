@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
             for(int i = 0; i < _commentCtrlList.Count; i++){
                 CommentControl ctrl = _commentCtrlList[i];
                 // コメントが消えるまでにに反応できなかった場合、ポイントをマイナス
-                if (i==0 && !(ctrl.GetCommnetCategory().Equals(CommnetCategory.NORMAL)) && !(ctrl.isSaidThank())){
+                if (i==0 && !(ctrl.GetChatCategory().Equals(ChatCategory.NORMAL)) && !(ctrl.IsSaidThank())){
                     Debug.Log("GameManager.Update : スルーしました");
                     LostScore();
                     _currentPeriod = Period.USER;
@@ -54,13 +54,13 @@ public class GameManager : MonoBehaviour
                 // 一番下のコメント以外の場合、次のコメントに書き換える
                 if (i < _commentCtrlList.Count-1){
                     ctrl.RotateComment(_commentCtrlList[i+1]);
-                    if (!ctrl.GetCommnetCategory().Equals(CommnetCategory.NORMAL) && !ctrl.isSaidThank()){
+                    if (!ctrl.GetChatCategory().Equals(ChatCategory.NORMAL) && !ctrl.IsSaidThank()){
                         isSupachaPostable = false;
                     }
                 }else{
                     //　一番下のコメントの場合、新しいコメントに書き換える
                     UserInfo userInfo = ctrl.SetComment(_commentList, _userList, isSupachaPostable);
-                    if (!ctrl.GetCommnetCategory().Equals(CommnetCategory.NORMAL)){
+                    if (!ctrl.GetChatCategory().Equals(ChatCategory.NORMAL)){
                         _targetUser = userInfo;
                         SetUserButtonCaption(_targetUser.id);
                         _currentPeriod = Period.USER;

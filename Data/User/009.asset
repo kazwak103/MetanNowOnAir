@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63168830e4927a54fb8ec330cdf42bd3, type: 3}
   m_Name: 009
   m_EditorClassIdentifier: 
-  id: 0
-  userName: "\u30D7\u30E9\u30B9\u30C9\u30E9\u30A4\u30D0\u30FC"
-  audio: {fileID: 8300000, guid: 2c803dfb80e704642b8f9680987fefea, type: 3}
+  id: 9
+  UserName: "\u30D7\u30E9\u30B9\u30C9\u30E9\u30A4\u30D0\u30FC"
+  Voice: {fileID: 8300000, guid: 2c803dfb80e704642b8f9680987fefea, type: 3}

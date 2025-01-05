@@ -29,14 +29,14 @@ public class UserButtonAction : MonoBehaviour
 
     // ボタンクリック
     // クリックされたボタンに設定されているユーザーIDを返す
-    public int click()
+    public int Click()
     {
         if (!GameManager._currentPeriod.Equals(GameManager.Period.USER)){
             return -1;
         }
         var userName = _gTmp.text;
-        Debug.Log(userName + "　が押されました。");
-        Debug.Log("ターゲットユーザー　：　"+ GameManager._targetUser.UserName);
+        Debug.Log("UserButtonAction.Click: "+ userName + "　が押されました。");
+        Debug.Log("UserButtonAction.Click: ターゲットユーザー　：　"+ GameManager._targetUser.UserName);
         PlayVoice();
         if (_userInfo.id == GameManager._targetUser.id){
             GameManager.AddScore();

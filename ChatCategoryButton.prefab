@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 7298220971509798143}
   - component: {fileID: 4541358670318713529}
   m_Layer: 0
-  m_Name: CommentCategoryButton
+  m_Name: ChatCategoryButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -232,6 +232,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162976b6aedcdc84f83bc6462c7a0acf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _category: {fileID: 0}
-  _gObj: {fileID: 8091084980801298038}
-  _tmp: {fileID: 8346892008974650894}
+  _chatCategoryInfo: {fileID: 0}
+  _chatButton: {fileID: 8091084980801298038}
+  _buttonCaption: {fileID: 8346892008974650894}

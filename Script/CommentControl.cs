@@ -14,8 +14,8 @@ public class CommentControl : MonoBehaviour
     private int _userId;
     [SerializeField]private TextMeshProUGUI _tmpComment;
     [SerializeField]private TextMeshProUGUI _tmpOptionMsg;
-    private CommnetCategory _commentCategory = CommnetCategory.NORMAL;
-    [SerializeField]private CommentCategoryList _commentCategoryList;
+    private ChatCategory _chatCategory = ChatCategory.NORMAL;
+    [SerializeField]private ChatCategoryList _chatCategoryList;
     private Boolean _isSaidThank = false;
 
     // Start is called before the first frame update
@@ -28,7 +28,7 @@ public class CommentControl : MonoBehaviour
         
         // コメントを設定
         _tmpComment.text = _commnetList.list[UnityEngine.Random.Range(0, _commnetList.list.Count)].CommentWord;
-        _commentCategory = CommnetCategory.NORMAL;
+        _chatCategory = ChatCategory.NORMAL;
     }
 
     // Update is called once per frame
@@ -48,7 +48,7 @@ public class CommentControl : MonoBehaviour
         _userId = commentCtrl._userId;
         _tmpUser.text = commentCtrl._tmpUser.text;
         _tmpUser.color = commentCtrl._tmpUser.color;
-        _commentCategory = commentCtrl._commentCategory;
+        _chatCategory = commentCtrl._chatCategory;
         _tmpOptionMsg.text = commentCtrl._tmpOptionMsg.text;
         _tmpOptionMsg.color = commentCtrl._tmpOptionMsg.color;
         _isSaidThank = commentCtrl._isSaidThank;
@@ -65,61 +65,61 @@ public class CommentControl : MonoBehaviour
         _userId = userInfo.id;
         _tmpUser.text = userInfo.UserName;
 
-        CommnetCategoryValue commnetCategoryValue = _commentCategoryList.GetCommnetCategoryValue(CommnetCategory.NORMAL);
+        ChatCategoryInfo chatCategoryInfo = _chatCategoryList.GetChatCategoryInfo(ChatCategory.NORMAL);
         if (isSupachaPostable) {
             switch (UnityEngine.Random.Range(0,4))
             {
                 case 0:
                 // スーパーチャット
-                commnetCategoryValue = _commentCategoryList.GetCommnetCategoryValue(CommnetCategory.SUPER_CHAT);
+                chatCategoryInfo = _chatCategoryList.GetChatCategoryInfo(ChatCategory.SUPER_CHAT);
                 break;
                 case 1:
                 // 赤スパ
-                commnetCategoryValue = _commentCategoryList.GetCommnetCategoryValue(CommnetCategory.SUPER_CHAT_RED);
+                chatCategoryInfo = _chatCategoryList.GetChatCategoryInfo(ChatCategory.SUPER_CHAT_RED);
                 break;
                 case 2:
                 // メンバーシップ登録
-                commnetCategoryValue = _commentCategoryList.GetCommnetCategoryValue(CommnetCategory.MEMBERSHIP);
+                chatCategoryInfo = _chatCategoryList.GetChatCategoryInfo(ChatCategory.MEMBERSHIP);
                 break;
                 case 3:
                 // メンバーシップギフト
-                commnetCategoryValue = _commentCategoryList.GetCommnetCategoryValue(CommnetCategory.MENBERSHIP_GIFT);
+                chatCategoryInfo = _chatCategoryList.GetChatCategoryInfo(ChatCategory.MENBERSHIP_GIFT);
                 break;
                 default:
                 break;
             }
         }
-        Debug.Log("コメントの種類 : " + commnetCategoryValue.Caption);
+        Debug.Log("コメントの種類 : " + chatCategoryInfo.Caption);
 
         // 選択されたチケットの種類にあわせて設定する
-        _commentBox.GetComponent<Renderer>().material.color = commnetCategoryValue.CommentBoxColor;
-        _commentCategory = commnetCategoryValue.Category;
-        _tmpComment.color = commnetCategoryValue.CommentColor;
-        _tmpUser.color = commnetCategoryValue.UserNameColor;
-        _tmpOptionMsg.text = commnetCategoryValue.OptionMessage;
-        _tmpOptionMsg.color = commnetCategoryValue.OprionMessageColor;
+        _commentBox.GetComponent<Renderer>().material.color = chatCategoryInfo.CommentBoxColor;
+        _chatCategory = chatCategoryInfo.Category;
+        _tmpComment.color = chatCategoryInfo.CommentTextColor;
+        _tmpUser.color = chatCategoryInfo.UserNameColor;
+        _tmpOptionMsg.text = chatCategoryInfo.OptionMessage;
+        _tmpOptionMsg.color = chatCategoryInfo.OprionMessageColor;
 
         //デフォルトメッセージが設定されている場合は書き換える
-        if (!String.IsNullOrEmpty(commnetCategoryValue.DefaultMessage)){
-            _tmpComment.text = commnetCategoryValue.DefaultMessage;
+        if (!String.IsNullOrEmpty(chatCategoryInfo.DefaultMessage)){
+            _tmpComment.text = chatCategoryInfo.DefaultMessage;
         }
 
         return userInfo;
     }
 
-    public CommnetCategory GetCommnetCategory(){
-        return _commentCategory;
+    public ChatCategory GetChatCategory(){
+        return _chatCategory;
     }
 
-    public void thank(){
+    public void Thank(){
         _isSaidThank = true;
     }
 
-    public Boolean isSaidThank(){
+    public Boolean IsSaidThank(){
         return _isSaidThank;
     }
 
-    public int getPoint(int userId){
+    public int GetPoint(int userId){
         int point = 0;
         if (userId == _userId && _isSaidThank){
             return 100;

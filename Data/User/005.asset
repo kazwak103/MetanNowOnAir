@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: 005
   m_EditorClassIdentifier: 
   id: 5
-  userName: "\u30D9\u30EA\u30FC\u30ED\u30FC\u30EB"
-  audio: {fileID: 8300000, guid: c77d20ee75ece434c815173147fb8509, type: 3}
+  UserName: "\u30D9\u30EA\u30FC\u30ED\u30FC\u30EB"
+  Voice: {fileID: 8300000, guid: c77d20ee75ece434c815173147fb8509, type: 3}

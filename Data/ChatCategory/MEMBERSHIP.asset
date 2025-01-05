@@ -10,16 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6147dc1ba48b0434bb5ead95ba12c392, type: 3}
-  m_Name: MEMBERSHIP_GIFT
+  m_Name: MEMBERSHIP
   m_EditorClassIdentifier: 
-  Category: 4
-  Caption: "\u30E1\u30F3\u30AE\u30D5"
-  CommentBoxColroCode: 007E0E
-  CommentBoxColor: {r: 0, g: 0.49411765, b: 0.05490196, a: 1}
+  Category: 3
+  Caption: "\u30E1\u30F3\u30D0\u30FC\u767B\u9332"
+  CommentBoxColroCode: 14F700
+  CommentBoxColor: {r: 0.07840371, g: 0.9669811, b: 0, a: 1}
   CommentColorCode: FFFFFF
   CommentColor: {r: 1, g: 1, b: 1, a: 1}
   UserNameColorCode: FFFFFF
   UserNameColor: {r: 1, g: 1, b: 1, a: 1}
-  OptionMessage: "\u30E1\u30F3\u30D0\u30FC\u30B7\u30C3\u30D7\u30AE\u30D5\u30C8"
-  OprionMessageColorCode: 14F700
-  OprionMessageColor: {r: 0.078431375, g: 0.96862745, b: 0, a: 1}
+  OptionMessage: "\u30E1\u30F3\u30D0\u30FC\u30B7\u30C3\u30D7\u767B\u9332"
+  OprionMessageColorCode: 007E0E
+  OprionMessageColor: {r: 0, g: 0.495283, b: 0.053941667, a: 1}
+  DefaultMessage: "\u3081\u305F\u3093\u306E\u90E8\u5C4B\u3078\u3088\u3046\u3053\u305D\uFF01"
+  Voice: {fileID: 0}

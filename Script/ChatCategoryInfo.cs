@@ -5,14 +5,14 @@ using UnityEngine;
 
 [CreateAssetMenu]
 [SerializeField]
-public class CommnetCategoryValue : ScriptableObject
+public class ChatCategoryInfo : ScriptableObject
 {
-    public CommnetCategory Category;
+    public ChatCategory Category;
     public String Caption;
     public String CommentBoxColroCode;
     public Color CommentBoxColor;
-    public String CommentColorCode;
-    public Color CommentColor;
+    public String CommentTextColorCode;
+    public Color CommentTextColor;
     public String UserNameColorCode;
     public Color UserNameColor;    
     public String OptionMessage;

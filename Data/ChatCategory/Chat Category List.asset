@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 813f1e8b32bd75d40a50d1932bc8a5b6, type: 3}
-  m_Name: Comment Category List
+  m_Name: Chat Category List
   m_EditorClassIdentifier: 
   commnetCategories:
   - {fileID: 11400000, guid: f6523859b8071f043924543806f30f75, type: 2}

@@ -32,13 +32,13 @@ public class KeyController : MonoBehaviour
     {
         int userId = -1;
         if (Input.GetKeyDown(KeyCode.A)){
-            userId  = _LButton.click();
+            userId  = _LButton.Click();
         }else if (Input.GetKeyDown(KeyCode.D)){
-            userId = _RButton.click();
+            userId = _RButton.Click();
         }else if (Input.GetKeyDown(KeyCode.W)){
-            userId = _TButton.click();
+            userId = _TButton.Click();
         }else if (Input.GetKeyDown(KeyCode.S)){
-            userId = _BButton.click();
+            userId = _BButton.Click();
         }
     }
 }
