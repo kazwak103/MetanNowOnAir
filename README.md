@@ -9,3 +9,7 @@
 配信終了時の視聴者数が最終的な得点となります。</br>
 </br>
 ![screen](https://github.com/user-attachments/assets/cbea8824-6f4d-4a89-9816-3601b538a1be)
+</br>
+</br>
+▼説明資料
+[めたん配信中_ゲーム説明.pdf](https://github.com/user-attachments/files/18369642/_.pdf)
