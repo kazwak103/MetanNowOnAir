@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     }
     static public Period _currentPeriod {get; set;}
     static public UserInfo _targetUser {get; set;}
+    static public ChatCategory _targetCategory {get; set;}
 
     // ユーザーボタン
     [SerializeField]public UserButtonAction _TButton;
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]public UserButtonAction _BButton;
 
     [SerializeField]private List<CommentControl> _commentCtrlList;
+    static public CommentControl _targetCtrl {get; set;}
     [SerializeField]private CommnetList _commentList;
     [SerializeField]private UserList _userList;
     [SerializeField]private float _lotateCycle = 2.0F;
@@ -46,7 +48,7 @@ public class GameManager : MonoBehaviour
             for(int i = 0; i < _commentCtrlList.Count; i++){
                 CommentControl ctrl = _commentCtrlList[i];
                 // コメントが消えるまでにに反応できなかった場合、ポイントをマイナス
-                if (i==0 && !(ctrl.GetChatCategory().Equals(ChatCategory.NORMAL)) && !(ctrl.IsSaidThank())){
+                if (i==0 && !(ctrl._chatCategory.Equals(ChatCategory.NORMAL)) && !(ctrl.IsSaidThank())){
                     Debug.Log("GameManager.Update : スルーしました");
                     LostScore();
                     _currentPeriod = Period.USER;
@@ -54,16 +56,21 @@ public class GameManager : MonoBehaviour
                 // 一番下のコメント以外の場合、次のコメントに書き換える
                 if (i < _commentCtrlList.Count-1){
                     ctrl.RotateComment(_commentCtrlList[i+1]);
-                    if (!ctrl.GetChatCategory().Equals(ChatCategory.NORMAL) && !ctrl.IsSaidThank()){
+                    // 通常のコメント　かつ　まだ表示されているスパチャ等にお礼をしていない場合、
+                    // スパチャを投げられないようにする。
+                    if (!ctrl._chatCategory.Equals(ChatCategory.NORMAL) && !ctrl.IsSaidThank()){
                         isSupachaPostable = false;
-                    }
+                        _targetCtrl = ctrl;
+                    } 
                 }else{
                     //　一番下のコメントの場合、新しいコメントに書き換える
-                    UserInfo userInfo = ctrl.SetComment(_commentList, _userList, isSupachaPostable);
-                    if (!ctrl.GetChatCategory().Equals(ChatCategory.NORMAL)){
-                        _targetUser = userInfo;
+                    ctrl.SetComment(_commentList, _userList, isSupachaPostable);
+                    if (!ctrl._chatCategory.Equals(ChatCategory.NORMAL)){
+                        _targetUser = ctrl._userInfo;
+                        _targetCategory = ctrl._chatCategory;
                         SetUserButtonCaption(_targetUser.id);
                         _currentPeriod = Period.USER;
+                        _targetCtrl = ctrl;
                     }
                 }
             }
@@ -99,10 +106,15 @@ public class GameManager : MonoBehaviour
 
     static public void LostScore(){
         score -= 5;
+        if (_currentPeriod.Equals(Period.COMMENT)){
+            _targetCtrl.Thank();
+        }
     }
 
     static public void AddScore(){
         score += 10;
+        if (_currentPeriod.Equals(Period.COMMENT)){
+            _targetCtrl.Thank();
+        }
     }
-    
 }

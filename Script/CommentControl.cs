@@ -11,12 +11,13 @@ public class CommentControl : MonoBehaviour
     [SerializeField]private CommnetList _commnetList;
     [SerializeField]private UserList _userList;
     [SerializeField]private TextMeshProUGUI _tmpUser;
-    private int _userId;
+    public UserInfo _userInfo {get; set;}
     [SerializeField]private TextMeshProUGUI _tmpComment;
     [SerializeField]private TextMeshProUGUI _tmpOptionMsg;
-    private ChatCategory _chatCategory = ChatCategory.NORMAL;
+    public ChatCategory _chatCategory {get; set;}= ChatCategory.NORMAL;
     [SerializeField]private ChatCategoryList _chatCategoryList;
-    private Boolean _isSaidThank = false;
+    private bool _isSaidThank = false;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +25,6 @@ public class CommentControl : MonoBehaviour
         // ユーザー名、IDを設定
         var userInfo = _userList.userList[UnityEngine.Random.Range(0, _userList.userList.Count)];
         _tmpUser.text = userInfo.UserName;
-        _userId = userInfo.id;
         
         // コメントを設定
         _tmpComment.text = _commnetList.list[UnityEngine.Random.Range(0, _commnetList.list.Count)].CommentWord;
@@ -45,7 +45,7 @@ public class CommentControl : MonoBehaviour
         _commentBox.GetComponent<Renderer>().material.color = commentCtrl.GetComponent<Renderer>().material.color;
         _tmpComment.text =commentCtrl._tmpComment.text;
         _tmpComment.color = commentCtrl._tmpComment.color;
-        _userId = commentCtrl._userId;
+        _userInfo = commentCtrl._userInfo;
         _tmpUser.text = commentCtrl._tmpUser.text;
         _tmpUser.color = commentCtrl._tmpUser.color;
         _chatCategory = commentCtrl._chatCategory;
@@ -57,13 +57,12 @@ public class CommentControl : MonoBehaviour
 
     // 新規のコメントを作成する。
     // 主に最新のコメントを作成するのに使用する    
-     public UserInfo SetComment(CommnetList commnetList, UserList userList, Boolean isSupachaPostable){
+     public void SetComment(CommnetList commnetList, UserList userList, Boolean isSupachaPostable){
 
         // コメント、ユーザーを設定する
         _tmpComment.text = commnetList.list[UnityEngine.Random.Range(0, commnetList.list.Count)].CommentWord;
-        UserInfo userInfo = userList.userList[UnityEngine.Random.Range(0, userList.userList.Count)];
-        _userId = userInfo.id;
-        _tmpUser.text = userInfo.UserName;
+        _userInfo = userList.userList[UnityEngine.Random.Range(0, userList.userList.Count)];
+        _tmpUser.text = _userInfo.UserName;
 
         ChatCategoryInfo chatCategoryInfo = _chatCategoryList.GetChatCategoryInfo(ChatCategory.NORMAL);
         if (isSupachaPostable) {
@@ -89,9 +88,9 @@ public class CommentControl : MonoBehaviour
                 break;
             }
         }
-        Debug.Log("コメントの種類 : " + chatCategoryInfo.Caption);
+        Debug.Log("チャットのカテゴリー : " + chatCategoryInfo.Caption);
 
-        // 選択されたチケットの種類にあわせて設定する
+        // 選択されたチャットのカテゴリーにあわせて設定する
         _commentBox.GetComponent<Renderer>().material.color = chatCategoryInfo.CommentBoxColor;
         _chatCategory = chatCategoryInfo.Category;
         _tmpComment.color = chatCategoryInfo.CommentTextColor;
@@ -103,25 +102,19 @@ public class CommentControl : MonoBehaviour
         if (!String.IsNullOrEmpty(chatCategoryInfo.DefaultMessage)){
             _tmpComment.text = chatCategoryInfo.DefaultMessage;
         }
-
-        return userInfo;
-    }
-
-    public ChatCategory GetChatCategory(){
-        return _chatCategory;
     }
 
     public void Thank(){
         _isSaidThank = true;
     }
 
-    public Boolean IsSaidThank(){
+    public bool IsSaidThank(){
         return _isSaidThank;
     }
 
     public int GetPoint(int userId){
         int point = 0;
-        if (userId == _userId && _isSaidThank){
+        if (userId == _userInfo.id && _isSaidThank){
             return 100;
         }
         return point;

@@ -57,7 +57,7 @@ public class UserButtonAction : MonoBehaviour
     public void PlayVoice(){
         Debug.Log(_userInfo.Voice.name);
         _source.clip = _userInfo.Voice;
-        _source.Play();
+        _source.Play();        
     }
 
     public void setUserName(String userName)

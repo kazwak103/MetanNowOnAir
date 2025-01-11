@@ -508,4 +508,4 @@ MonoBehaviour:
   _tmpUser: {fileID: 4393494991781696296}
   _tmpComment: {fileID: 3012666966239705466}
   _tmpOptionMsg: {fileID: 7475302940988562132}
-  _commentCategoryList: {fileID: 11400000, guid: 28b6b1e349ef9a847848a067693f20d2, type: 2}
+  _chatCategoryList: {fileID: 11400000, guid: 28b6b1e349ef9a847848a067693f20d2, type: 2}

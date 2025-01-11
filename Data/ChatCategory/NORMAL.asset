@@ -16,10 +16,12 @@ MonoBehaviour:
   Caption: NORMAL
   CommentBoxColroCode: FFF4F4FF
   CommentBoxColor: {r: 1, g: 0.95686275, b: 0.95686275, a: 1}
-  CommentColorCode: 784646FF
-  CommentColor: {r: 0.47058824, g: 0.27450982, b: 0.27450982, a: 1}
-  UserNameColorCode: EE3333
-  UserNameColor: {r: 0.93333334, g: 0.2, b: 0.2, a: 1}
+  CommentTextColorCode: 784747
+  CommentTextColor: {r: 0.47058824, g: 0.2784314, b: 0.2784314, a: 1}
+  UserNameColorCode: EE3232
+  UserNameColor: {r: 0.9333334, g: 0.19607845, b: 0.19607845, a: 1}
   OptionMessage: 
-  OprionMessageColorCode: 
-  OprionMessageColor: {r: 0, g: 0, b: 0, a: 0}
+  OprionMessageColorCode: EE3232
+  OprionMessageColor: {r: 0.93333334, g: 0.19607843, b: 0.19607843, a: 1}
+  DefaultMessage: 
+  Voice: {fileID: 0}

@@ -16,10 +16,12 @@ MonoBehaviour:
   Caption: "\u8D64\u30B9\u30D1"
   CommentBoxColroCode: FF0000
   CommentBoxColor: {r: 1, g: 0, b: 0, a: 1}
-  CommentColorCode: FFFFFF
-  CommentColor: {r: 1, g: 1, b: 1, a: 1}
+  CommentTextColorCode: FFF4F4FF
+  CommentTextColor: {r: 1, g: 0.95686275, b: 0.95686275, a: 1}
   UserNameColorCode: FFFFFF
   UserNameColor: {r: 1, g: 1, b: 1, a: 1}
   OptionMessage: "\uFFE5\uFF15\uFF10\uFF0C\uFF10\uFF10\uFF10"
   OprionMessageColorCode: FFF4F4FF
   OprionMessageColor: {r: 1, g: 0.95686275, b: 0.95686275, a: 1}
+  DefaultMessage: 
+  Voice: {fileID: 8300000, guid: 3bf758e233d828248bdbd03770e01c2c, type: 3}

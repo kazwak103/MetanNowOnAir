@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 813f1e8b32bd75d40a50d1932bc8a5b6, type: 3}
   m_Name: Chat Category List
   m_EditorClassIdentifier: 
-  commnetCategories:
+  ChatCategoryInfos:
   - {fileID: 11400000, guid: f6523859b8071f043924543806f30f75, type: 2}
   - {fileID: 11400000, guid: ca001381feea580438aa3bdcedf094aa, type: 2}
   - {fileID: 11400000, guid: ed26d0334b39b62478ac1c625804a9f0, type: 2}
