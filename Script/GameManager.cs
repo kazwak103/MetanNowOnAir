@@ -33,9 +33,13 @@ public class GameManager : MonoBehaviour
     [SerializeField]private TextMeshProUGUI _scoreText;
     private float _lastLotateTime = 0.0F;
     // Start is called before the first frame update
+
+    static private List<AudioClip> _voiceList = new List<AudioClip>();
+    private AudioSource _source;
     void Start()
     {
         _currentPeriod = Period.USER;
+        _source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -76,6 +80,10 @@ public class GameManager : MonoBehaviour
             }
             _scoreText.text = score + " 人が視聴中";
             _lastLotateTime = Time.time;
+            if (_source is not null && !_source.isPlaying){
+                StartCoroutine(PlayVoice());
+            }
+
         }
     }
 
@@ -115,6 +123,21 @@ public class GameManager : MonoBehaviour
         score += 10;
         if (_currentPeriod.Equals(Period.COMMENT)){
             _targetCtrl.Thank();
+        }
+    }
+
+    static public void AddVoiceClip(AudioClip audioClip){
+        _voiceList.Add(audioClip);
+    }
+
+    private IEnumerator PlayVoice(){
+        Debug.Log("GameManager.PlayVoice");
+        while (_voiceList.Count > 0){
+            _source.clip = _voiceList[0];
+            Debug.Log("GameManager.PlayVoice : " + _source.clip.name);
+            _source.Play();
+            yield return new WaitWhile(()=>_source.isPlaying);
+            _voiceList.Remove(_source.clip);
         }
     }
 }

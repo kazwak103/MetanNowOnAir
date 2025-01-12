@@ -9,15 +9,13 @@ public class ChatCategoryButtonAction : MonoBehaviour
     [SerializeField]private ChatCategoryInfo _chatCategoryInfo;
     [SerializeField]private GameObject _chatButton;
     [SerializeField]private TextMeshProUGUI _buttonCaption;
-    // Start is called before the first frame update
-    private AudioSource _source;
 
+    // Start is called before the first frame update
     void Start()
     {
         _chatButton.GetComponent<Renderer>().material.color = _chatCategoryInfo.CommentBoxColor;
         _buttonCaption.color = _chatCategoryInfo.OprionMessageColor;
         _buttonCaption.text = _chatCategoryInfo.Caption;
-        _source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -33,7 +31,8 @@ public class ChatCategoryButtonAction : MonoBehaviour
         var catCategory = _buttonCaption.text;
         Debug.Log("ChatCategoryButtonAction.Click: "+ catCategory + "　が押されました。");
         // Debug.Log("ChatCategoryButtonAction.Click: カテゴリー　：　"+ GameManager._targetUser.UserName);
-        PlayVoice();
+        // PlayVoice();
+        GameManager.AddVoiceClip(_chatCategoryInfo.Voice);
         if (_chatCategoryInfo.Category.Equals(GameManager._targetCategory)){
             GameManager.AddScore();
         }
@@ -42,10 +41,4 @@ public class ChatCategoryButtonAction : MonoBehaviour
         }
         GameManager._currentPeriod = GameManager.Period.USER;
     }
-    public void PlayVoice(){
-        Debug.Log(_chatCategoryInfo.Voice.name);
-        _source.clip = _chatCategoryInfo.Voice;
-        _source.Play();
-    }
-
 }
