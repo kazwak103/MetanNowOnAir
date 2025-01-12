@@ -24,4 +24,4 @@ MonoBehaviour:
   OprionMessageColorCode: 14F700
   OprionMessageColor: {r: 0.078431375, g: 0.96862745, b: 0, a: 1}
   DefaultMessage: "5\u4EF6\u306E\u30E1\u30F3\u30D0\u30FC\u30B7\u30C3\u30D7\u30AE\u30D5\u30C8\u3092\u8D08\u308A\u307E\u3057\u305F"
-  Voice: {fileID: 8300000, guid: 82e07ff26bdc2b14285d54edfa8609cb, type: 3}
+  Voice: {fileID: 8300000, guid: 2bea1106562682e4cac96f358b6c5bc7, type: 3}

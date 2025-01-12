@@ -7,6 +7,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : MonoBehaviour
 {
@@ -29,9 +30,11 @@ public class GameManager : MonoBehaviour
     [SerializeField]private CommnetList _commentList;
     [SerializeField]private UserList _userList;
     [SerializeField]private float _lotateCycle = 2.0F;
-    static private int score = 100;
+    static private float _score = 100;
     [SerializeField]private TextMeshProUGUI _scoreText;
     private float _lastLotateTime = 0.0F;
+
+    static private float DEFOULT_PITCH = 1.0F;
     // Start is called before the first frame update
 
     static private List<AudioClip> _voiceList = new List<AudioClip>();
@@ -40,13 +43,21 @@ public class GameManager : MonoBehaviour
     {
         _currentPeriod = Period.USER;
         _source = GetComponent<AudioSource>();
+        _source.pitch = 1;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Debug.Log(Time.time + " : " + _lastLotateTime + " : " + _lotateCycle);
-        if (Time.time > _lastLotateTime + _lotateCycle){
+        // 100人増えるごとにチャットの速度を上げる
+        float speedUp = (_score - 100.0F) / 500.0F;
+        if (speedUp < 0.0F){
+            speedUp = 0.0F;
+        }else if (speedUp > 0.5F){
+            speedUp = 0.5F;
+        }
+
+        if (Time.time > _lastLotateTime + (_lotateCycle - speedUp)){
             Boolean isSupachaPostable = true;
             // コメントをスクロールさせる
             for(int i = 0; i < _commentCtrlList.Count; i++){
@@ -78,7 +89,7 @@ public class GameManager : MonoBehaviour
                     }
                 }
             }
-            _scoreText.text = score + " 人が視聴中";
+            _scoreText.text = _score + " 人が視聴中";
             _lastLotateTime = Time.time;
             if (_source is not null && !_source.isPlaying){
                 StartCoroutine(PlayVoice());
@@ -113,14 +124,14 @@ public class GameManager : MonoBehaviour
     }
 
     static public void LostScore(){
-        score -= 5;
+        _score -= 5.0F;
         if (_currentPeriod.Equals(Period.COMMENT)){
             _targetCtrl.Thank();
         }
     }
 
     static public void AddScore(){
-        score += 10;
+        _score += 5.0F;
         if (_currentPeriod.Equals(Period.COMMENT)){
             _targetCtrl.Thank();
         }
@@ -135,6 +146,11 @@ public class GameManager : MonoBehaviour
         while (_voiceList.Count > 0){
             _source.clip = _voiceList[0];
             Debug.Log("GameManager.PlayVoice : " + _source.clip.name);
+            float addPitch = (float)_voiceList.Count / 100.0F; 
+            if (addPitch > 0.05F) {
+                addPitch = 0.05F;
+            }
+            _source.pitch = 1.0F + addPitch;
             _source.Play();
             yield return new WaitWhile(()=>_source.isPlaying);
             _voiceList.Remove(_source.clip);
