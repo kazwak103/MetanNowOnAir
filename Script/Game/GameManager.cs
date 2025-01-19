@@ -34,7 +34,6 @@ public class GameManager : MonoBehaviour
     [SerializeField]private TextMeshProUGUI _scoreText;
     private float _lastLotateTime = 0.0F;
 
-    static private float DEFOULT_PITCH = 1.0F;
     // Start is called before the first frame update
 
     static private List<AudioClip> _voiceList = new List<AudioClip>();
