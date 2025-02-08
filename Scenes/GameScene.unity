@@ -704,6 +704,7 @@ MonoBehaviour:
   - {fileID: 1814491011}
   _commentList: {fileID: 11400000, guid: ab13361cdbc2b9742a42424da96b3eba, type: 2}
   _userList: {fileID: 11400000, guid: c8043cff63f96c64b93af5ad0fc5a643, type: 2}
+  _streamingTime: 30
   _lotateCycle: 1
   _scoreText: {fileID: 1504936978}
 --- !u!4 &446065627

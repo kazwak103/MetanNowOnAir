@@ -7,17 +7,18 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : MonoBehaviour
 {
     public enum Period {
-        USER,
-        COMMENT,
+        USER,       // 視聴者選択のピリオド
+        COMMENT,    // コメントの種別選択のピリオド
     }
-    static public Period _currentPeriod {get; set;}
-    static public UserInfo _targetUser {get; set;}
-    static public ChatCategory _targetCategory {get; set;}
+    static public Period _currentPeriod {get; set;}         // 現在のピリオド
+    static public UserInfo _targetUser {get; set;}          // 対象となる視聴者
+    static public ChatCategory _targetCategory {get; set;}  // 対象となるコメントの種別
 
     // ユーザーボタン
     [SerializeField]public UserButtonAction _TButton;
@@ -25,14 +26,16 @@ public class GameManager : MonoBehaviour
     [SerializeField]public UserButtonAction _RButton;
     [SerializeField]public UserButtonAction _BButton;
 
-    [SerializeField]private List<CommentControl> _commentCtrlList;
-    static public CommentControl _targetCtrl {get; set;}
-    [SerializeField]private CommnetList _commentList;
-    [SerializeField]private UserList _userList;
-    [SerializeField]private float _lotateCycle = 2.0F;
-    static private float _score = 100;
-    [SerializeField]private TextMeshProUGUI _scoreText;
-    private float _lastLotateTime = 0.0F;
+    [SerializeField]private List<CommentControl> _commentCtrlList;  // コメント欄のリスト
+    static public CommentControl _targetCtrl {get; set;}            // 対象となっているコメント
+    [SerializeField]private CommnetList _commentList;               // コメントデータのリスト
+    [SerializeField]private UserList _userList;                     // 視聴者データのリスト
+    [SerializeField]private float _streamingTime = 120.0F;          // 配信時間（秒）
+    private float _startTime = 0.0F;                // 配信開始時間
+    [SerializeField]private float _lotateCycle = 2.0F;              // コメント更新のサイクル（秒）
+    static public float _score = 100;                              // スコア（視聴者数）
+    [SerializeField]private TextMeshProUGUI _scoreText;             // スコア（視聴者数）表示
+    private float _lastLotateTime = 0.0F;                           // コメントの最終更新時刻
 
     // Start is called before the first frame update
 
@@ -43,6 +46,7 @@ public class GameManager : MonoBehaviour
         _currentPeriod = Period.USER;
         _source = GetComponent<AudioSource>();
         _source.pitch = 1;
+        _startTime = Time.time;
     }
 
     // Update is called once per frame
@@ -56,7 +60,10 @@ public class GameManager : MonoBehaviour
             speedUp = 0.5F;
         }
 
-        if (Time.time > _lastLotateTime + (_lotateCycle - speedUp)){
+        if (Time.time >= _startTime + _streamingTime){
+            SceneManager.LoadScene("CompleteScene");
+        }
+        else if (Time.time > _lastLotateTime + (_lotateCycle - speedUp)){
             Boolean isSupachaPostable = true;
             // コメントをスクロールさせる
             for(int i = 0; i < _commentCtrlList.Count; i++){
@@ -64,7 +71,7 @@ public class GameManager : MonoBehaviour
                 // コメントが消えるまでにに反応できなかった場合、ポイントをマイナス
                 if (i==0 && !(ctrl._chatCategory.Equals(ChatCategory.NORMAL)) && !(ctrl.IsSaidThank())){
                     Debug.Log("GameManager.Update : スルーしました");
-                    LostScore();
+                    ThroughtComment();
                     _currentPeriod = Period.USER;
                 }
                 // 一番下のコメント以外の場合、次のコメントに書き換える
@@ -87,6 +94,9 @@ public class GameManager : MonoBehaviour
                         _targetCtrl = ctrl;
                     }
                 }
+            }
+            if (_score == 0){
+                SceneManager.LoadScene("GameOverScene");
             }
             _scoreText.text = _score + " 人が視聴中";
             _lastLotateTime = Time.time;
@@ -122,6 +132,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private static void ThroughtComment(){
+        _score -= 10.0F;
+    }
     static public void LostScore(){
         _score -= 5.0F;
         if (_currentPeriod.Equals(Period.COMMENT)){
