@@ -57,7 +57,7 @@ public class CommentControl : MonoBehaviour
 
     // 新規のコメントを作成する。
     // 主に最新のコメントを作成するのに使用する    
-     public void SetComment(CommnetList commnetList, UserList userList, Boolean isSupachaPostable){
+     public void SetComment(CommnetList commnetList, UserList userList){
 
         // コメント、ユーザーを設定する
         _tmpComment.text = commnetList.list[UnityEngine.Random.Range(0, commnetList.list.Count)].CommentWord;
@@ -65,7 +65,7 @@ public class CommentControl : MonoBehaviour
         _tmpUser.text = _userInfo.UserName;
 
         ChatCategoryInfo chatCategoryInfo = _chatCategoryList.GetChatCategoryInfo(ChatCategory.NORMAL);
-        if (isSupachaPostable) {
+        if (GameManager._current._currentPeriod.Equals(GameManager.CurrentStatus.Period.WAIT)) {
             switch (UnityEngine.Random.Range(0,4))
             {
                 case 0:
@@ -87,6 +87,7 @@ public class CommentControl : MonoBehaviour
                 default:
                 break;
             }
+            GameManager._current._currentPeriod = GameManager.CurrentStatus.Period.USER;
         }
         Debug.Log("チャットのカテゴリー : " + chatCategoryInfo.Caption);
 
@@ -110,13 +111,5 @@ public class CommentControl : MonoBehaviour
 
     public bool IsSaidThank(){
         return _isSaidThank;
-    }
-
-    public int GetPoint(int userId){
-        int point = 0;
-        if (userId == _userInfo.id && _isSaidThank){
-            return 100;
-        }
-        return point;
     }
 }

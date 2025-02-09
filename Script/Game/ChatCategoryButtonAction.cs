@@ -18,27 +18,15 @@ public class ChatCategoryButtonAction : MonoBehaviour
         _buttonCaption.text = _chatCategoryInfo.Caption;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void Click(){
-        if (!GameManager._currentPeriod.Equals(GameManager.Period.COMMENT)){
+        if (!GameManager._current._currentPeriod.Equals(GameManager.CurrentStatus.Period.COMMENT)){
             return;
         }
         var catCategory = _buttonCaption.text;
         Debug.Log("ChatCategoryButtonAction.Click: "+ catCategory + "　が押されました。");
-        // Debug.Log("ChatCategoryButtonAction.Click: カテゴリー　：　"+ GameManager._targetUser.UserName);
-        // PlayVoice();
         GameManager.AddVoiceClip(_chatCategoryInfo.Voice);
-        if (_chatCategoryInfo.Category.Equals(GameManager._targetCategory)){
-            GameManager.AddScore();
-        }
-        else {
-            GameManager.LostScore();
-        }
-        GameManager._currentPeriod = GameManager.Period.USER;
+
+        GameManager._current._selectedCategory = _chatCategoryInfo.Category;
+        GameManager._current._currentPeriod = GameManager.CurrentStatus.Period.JUDGEMENT;
     }
 }

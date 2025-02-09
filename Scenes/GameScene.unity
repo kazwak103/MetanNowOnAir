@@ -1720,8 +1720,8 @@ MonoBehaviour:
   _uList: {fileID: 11400000, guid: c8043cff63f96c64b93af5ad0fc5a643, type: 2}
   _SuperChatRedButton: {fileID: 622429853}
   _SuperChatButton: {fileID: 1221539285}
-  _MemberShipButton: {fileID: 1404597965}
-  _MemberShipGiftButton: {fileID: 1800671226}
+  _MemberShipButton: {fileID: 1800671226}
+  _MemberShipGiftButton: {fileID: 1404597965}
 --- !u!4 &1348386775
 Transform:
   m_ObjectHideFlags: 0

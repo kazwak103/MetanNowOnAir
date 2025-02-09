@@ -12,11 +12,8 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : MonoBehaviour
 {
-    public enum Period {
-        USER,       // 視聴者選択のピリオド
-        COMMENT,    // コメントの種別選択のピリオド
-    }
-    static public Period _currentPeriod {get; set;}         // 現在のピリオド
+    static public CurrentStatus _current;
+
     static public UserInfo _targetUser {get; set;}          // 対象となる視聴者
     static public ChatCategory _targetCategory {get; set;}  // 対象となるコメントの種別
 
@@ -36,14 +33,14 @@ public class GameManager : MonoBehaviour
     static public float _score = 100;                              // スコア（視聴者数）
     [SerializeField]private TextMeshProUGUI _scoreText;             // スコア（視聴者数）表示
     private float _lastLotateTime = 0.0F;                           // コメントの最終更新時刻
-
-    // Start is called before the first frame update
-
     static private List<AudioClip> _voiceList = new List<AudioClip>();
     private AudioSource _source;
+
+    // Start is called before the first frame update
     void Start()
     {
-        _currentPeriod = Period.USER;
+        _current = new CurrentStatus();
+        _current._currentPeriod = CurrentStatus.Period.WAIT;
         _source = GetComponent<AudioSource>();
         _source.pitch = 1;
         _startTime = Time.time;
@@ -52,6 +49,34 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 判定モードの場合、特典を計算する
+        if (_current._currentPeriod == CurrentStatus.Period.JUDGEMENT){
+            // 選択ユーザー判定
+            if (_current._targetUser.id == _current._selectedUser){
+                AddScore();
+            }
+            else {
+                LostScore();
+            }
+            // 選択チャットカテゴリー判定
+            if (_current._targetCategory.Equals(_current._selectedCategory)){
+                AddScore();
+            }
+            else {
+                LostScore();
+            }
+            _current._currentPeriod = CurrentStatus.Period.WAIT;
+        }
+        // 視聴者が0人になったらゲームオーバー
+        if (_score == 0){
+            SceneManager.LoadScene("GameOverScene");
+        }
+        // ゲーム実施時間を超えていたら、完了画面に遷移する
+        if (Time.time >= _startTime + _streamingTime){
+            SceneManager.LoadScene("CompleteScene");
+        }
+        
+        // コメントの更新速度を再計算する
         // 100人増えるごとにチャットの速度を上げる
         float speedUp = (_score - 100.0F) / 500.0F;
         if (speedUp < 0.0F){
@@ -59,12 +84,8 @@ public class GameManager : MonoBehaviour
         }else if (speedUp > 0.5F){
             speedUp = 0.5F;
         }
-
-        if (Time.time >= _startTime + _streamingTime){
-            SceneManager.LoadScene("CompleteScene");
-        }
-        else if (Time.time > _lastLotateTime + (_lotateCycle - speedUp)){
-            Boolean isSupachaPostable = true;
+        // コメントの更新
+        if (Time.time > _lastLotateTime + (_lotateCycle - speedUp)){
             // コメントをスクロールさせる
             for(int i = 0; i < _commentCtrlList.Count; i++){
                 CommentControl ctrl = _commentCtrlList[i];
@@ -72,7 +93,7 @@ public class GameManager : MonoBehaviour
                 if (i==0 && !(ctrl._chatCategory.Equals(ChatCategory.NORMAL)) && !(ctrl.IsSaidThank())){
                     Debug.Log("GameManager.Update : スルーしました");
                     ThroughtComment();
-                    _currentPeriod = Period.USER;
+                    _current._currentPeriod = CurrentStatus.Period.USER;
                 }
                 // 一番下のコメント以外の場合、次のコメントに書き換える
                 if (i < _commentCtrlList.Count-1){
@@ -80,30 +101,27 @@ public class GameManager : MonoBehaviour
                     // 通常のコメント　かつ　まだ表示されているスパチャ等にお礼をしていない場合、
                     // スパチャを投げられないようにする。
                     if (!ctrl._chatCategory.Equals(ChatCategory.NORMAL) && !ctrl.IsSaidThank()){
-                        isSupachaPostable = false;
                         _targetCtrl = ctrl;
                     } 
                 }else{
                     //　一番下のコメントの場合、新しいコメントに書き換える
-                    ctrl.SetComment(_commentList, _userList, isSupachaPostable);
+                    ctrl.SetComment(_commentList, _userList);
                     if (!ctrl._chatCategory.Equals(ChatCategory.NORMAL)){
-                        _targetUser = ctrl._userInfo;
-                        _targetCategory = ctrl._chatCategory;
-                        SetUserButtonCaption(_targetUser.id);
-                        _currentPeriod = Period.USER;
-                        _targetCtrl = ctrl;
+                        _current.SetCurrentCommnent(ctrl);
+                        SetUserButtonCaption(_current._targetUser.id);
                     }
                 }
             }
-            if (_score == 0){
-                SceneManager.LoadScene("GameOverScene");
-            }
+
+            // 視聴者数の表示を更新する
             _scoreText.text = _score + " 人が視聴中";
-            _lastLotateTime = Time.time;
+
+            // 音声ファイルがセットされている場合、再生する
             if (_source is not null && !_source.isPlaying){
                 StartCoroutine(PlayVoice());
             }
-
+            // 最新の実施時間を更新する
+            _lastLotateTime = Time.time;
         }
     }
 
@@ -137,14 +155,14 @@ public class GameManager : MonoBehaviour
     }
     static public void LostScore(){
         _score -= 5.0F;
-        if (_currentPeriod.Equals(Period.COMMENT)){
+        if (_current._currentPeriod.Equals(CurrentStatus.Period.COMMENT)){
             _targetCtrl.Thank();
         }
     }
 
     static public void AddScore(){
         _score += 5.0F;
-        if (_currentPeriod.Equals(Period.COMMENT)){
+        if (_current._currentPeriod.Equals(CurrentStatus.Period.COMMENT)){
             _targetCtrl.Thank();
         }
     }
@@ -166,6 +184,28 @@ public class GameManager : MonoBehaviour
             _source.Play();
             yield return new WaitWhile(()=>_source.isPlaying);
             _voiceList.Remove(_source.clip);
+        }
+    }
+
+    public class CurrentStatus{
+     public enum Period {
+        WAIT,       // 操作を受け付けないピリオド
+        USER,       // 視聴者選択のピリオド
+        COMMENT,    // コメントの種別選択のピリオド
+        JUDGEMENT,  // 判定ピリオド
+    }
+        public Period _currentPeriod {get; set;}            // 現在のピリオド
+        public UserInfo _targetUser {get; set;}             // 対象となる視聴者
+        public ChatCategory _targetCategory {get; set;}     // 対象となるコメントの種別
+        public CommentControl _targetCtrl {get; set;}       // 対象となるコメントコントロール
+        public int _selectedUser {get; set;}                // 選択されたユーザー
+        public ChatCategory _selectedCategory {get; set;}   // 選択されたコメントの種別
+
+        public void SetCurrentCommnent(CommentControl ctrl){
+            _current._targetUser = ctrl._userInfo;
+            _current._targetCategory = ctrl._chatCategory;
+            _current._currentPeriod = Period.USER;
+            _current._targetCtrl = ctrl;
         }
     }
 }
